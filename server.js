@@ -1,10 +1,18 @@
-require("dotenv").config();
+// npm
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
+const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const logger = require("morgan");
 
-const app = express();
+
+
+// Import routers
+const testJwtRouter = require("./controllers/test-jwt");
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
@@ -18,10 +26,10 @@ app.use(cors());
 app.use(express.json());
 app.use(logger("dev"));
 
-// Route
-app.get("/", (req, res) => {
-  res.send("E-Invoice API is running...");
-});
+// Routes
+app.use("/test-jwt", testJwtRouter);
+app.use("/auth", authRouter);
+app.use("/users", usersRouter);
 
 // Start the server and listen on port 3000
 app.listen(3000, () => {
