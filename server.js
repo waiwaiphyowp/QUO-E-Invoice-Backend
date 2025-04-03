@@ -14,11 +14,21 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
-// Middleware
-app.use(cors()); 
+// Middleware 
 app.use(express.json()); 
 app.use(logger("dev")); 
 
+// Enhanced CORS configuration
+app.use(cors({
+  origin: [
+    'https://quo-e-invoice-frontend.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Database connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log(`Connected to MongoDB ${mongoose.connection.name}`))
   .catch(err => {
@@ -31,9 +41,12 @@ app.get("/", (req, res) => {
   res.send("QUO E-Invoice API is running!");
 });
 
-// Routes
+// Routes 
 app.use("/api/test-jwt", testJwtRouter);
-app.use("/api/auth", authRouter);
+app.use("/api/auth", (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+}, authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/invoices", invoiceRoutes);
 
