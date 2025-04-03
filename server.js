@@ -32,10 +32,10 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/test-jwt", testJwtRouter);
-app.use("/auth", authRouter);
-app.use("/users", usersRouter);
-app.use("/invoices", invoiceRoutes); 
+app.use("/api/test-jwt", testJwtRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/invoices", invoiceRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3000;
