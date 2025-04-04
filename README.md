@@ -6,7 +6,7 @@ This is the backend for our QUO E-Invoice system. It handles user authentication
 <!-- - **Authentication**: No authentication required for these endpoints (public). -->
 - **Content Type**: `application/json`
 
-**Frontend***
+**Frontend**
 https://quo-e-invoice-frontend.vercel.app/
 
 # API Endpoints
